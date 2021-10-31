@@ -19,7 +19,7 @@ public class DbUtils {
     public static void close(Connection con, PreparedStatement ps) {
         close(con, ps, null);
     }
-    
+
     public static void close(Connection con, PreparedStatement ps, ResultSet rs) {
         if(rs != null) {
             try { rs.close(); }
