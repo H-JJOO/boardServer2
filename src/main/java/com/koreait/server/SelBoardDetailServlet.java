@@ -9,19 +9,28 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 
-@WebServlet("/selList")
-public class SelBoardListServlet extends HttpServlet {
+@WebServlet("/sel")
+public class SelBoardDetailServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-        List<BoardVO> list = BoardDAO.selBoardList();//버스 주소값 가져옴
-        Gson gson = new Gson();//Gson 객체화
-        String json = gson.toJson(list);//버스 주소값을 json 으로 바꿔준다
-        System.out.println("json : " + json);
+        //GET 방식이기때문에 쿼리스트링(?블라블라)으로 날라옴
+        
+        String strIboard = req.getParameter("iboard");
+        int iboard = Integer.parseInt(strIboard);
+        BoardVO param = new BoardVO();//여기서 만들어짐(0,null)
+        param.setIboard(iboard);
+        BoardVO result = BoardDAO.selBoard(param);//DAO 에서 만들어짐(값 넣어준거 담긴 값)
+        Gson gson = new Gson();
+        String json = gson.toJson(result);
+
         res.setContentType("text/plain;;charset=UTF-8");//한글 깨지지 않게 하기
         res.setCharacterEncoding("UTF-8");// 한글 깨지지 않게 하기
+
         PrintWriter out = res.getWriter();
-        out.print(json);//바꾼 버스 주소값을 응답
+        out.print(json);
+
+
+
     }
 }

@@ -18,16 +18,16 @@ public class InsBoardServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-        String json = Utils.getJson(req);
+        String json = Utils.getJson(req);//json 에 Utils 연결
         System.out.println("json : " + json);
 
-        Gson gson = new Gson();
-        BoardVO param = gson.fromJson(json, BoardVO.class);
+        Gson gson = new Gson();//Gson 객체화
+        BoardVO param = gson.fromJson(json, BoardVO.class);//java -> Json
         System.out.println(param.getTitle());
         System.out.println(param.getCtnt());
         System.out.println(param.getWriter());
 
-        int result = BoardDAO.insBoard(param);
+        int result = BoardDAO.insBoard(param);//BoardDAO 의 insert 기능 가져오기
         System.out.println("result : " + result);
 
 
